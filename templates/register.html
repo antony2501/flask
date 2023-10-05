@@ -9,7 +9,7 @@
                 <div class="card-body">
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
-                        <div class="alert alert-danger">
+                        <div class="alert {% if 'error' in messages[0] %} alert-success {% else %} alert-danger {% endif %}">
                             <ul>
                                 {% for message in messages %}
                                     <li>{{ message }}</li>
@@ -17,7 +17,8 @@
                             </ul>
                         </div>
                     {% endif %}
-                {% endwith %}
+                    {% endwith %}
+                
 
                     <form method="POST">
                         <!-- Form fields for name, email, password -->

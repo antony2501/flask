@@ -1,0 +1,248 @@
+{% extends 'base.html' %}
+{% block content %}
+
+
+    <!-- login -->
+    <!-- <div class="wrapper">
+        <span class="icon-close"><ion-icon name="close"></ion-icon>
+        </span>
+
+        <div class="form-box login">
+            <h2>Đăng nhập</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" required>
+                    <label>Mật Khẩu</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Nhớ mật khẩu</label>
+                    <a href="#">Quên mật khẩu?</a>
+                </div>
+                <button type="submit" class="btnx">Đăng nhập</button>
+                <div class="login-register">
+                    <p>bạn chưa có tài khoản?<a href="#" class="register-link"> Đăng ký ngay</a></p>
+                </div>
+            </form>
+        </div>
+
+        <div class="form-box register">
+            <h2>Đăng ký</h2>
+            <form action="#">
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="person"></ion-icon></span>
+                    <input type="text" required>
+                    <label>Tên người dùng</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                    <input type="password" required>
+                    <label>Mật khẩu</label>
+                </div>
+                <div class="remember-forgot">
+                    <label><input type="checkbox">Đồng ý với nội dung & chính sách của Toán thầy Nguyện</label>
+                </div>
+                <button type="submit" class="btnx">Đăng ký</button>
+                <div class="login-register">
+                    <p>Bạn có tài khoản để đăng nhập?<a href="#" class="login-link"> Đăng nhập</a></p>
+                </div>
+            </form>
+        </div>
+
+    </div> -->
+
+<!-- intro -->
+<div class="container-fluid p-0 mb-5">
+    <div class="owl-carousel header-carousel position-relative">
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="{{ url_for('static', filename='img/carousel-2.jpg') }}" alt="Carousel Image">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-sm-10 col-lg-8">
+                            <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Khóa học tốt nhất</h5>
+                            <h1 class="display-3 text-white animated slideInDown">Khóa học tốt nhất dành cho bạn</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">Với tính chuyên môn, nghiệp vụ cao thầy Nguyện đã giảng dạy được rất nhiều học sinh với điểm thi đại học cao</p>
+                            <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Xem thêm</a>
+                            <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Tham gia ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="owl-carousel-item position-relative">
+            <img class="img-fluid" src="{{ url_for('static', filename='img/carousel-1.jpg') }}" alt="Carousel Image">
+            <div class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center" style="background: rgba(24, 29, 56, .7);">
+                <div class="container">
+                    <div class="row justify-content-start">
+                        <div class="col-sm-10 col-lg-8">
+                            <h5 class="text-primary text-uppercase mb-3 animated slideInDown">Trung tâm tốt nhất</h5>
+                            <h1 class="display-3 text-white animated slideInDown">Trung tâm tốt nhất</h1>
+                            <p class="fs-5 text-white mb-4 pb-2">Địa chỉ: Số 63, Ngõ Huế, Quận Hai Bà Trưng, TP Hà Nội.</p>
+                            <a href="" class="btn btn-primary py-md-3 px-md-5 me-3 animated slideInLeft">Xem thêm</a>
+                            <a href="" class="btn btn-light py-md-3 px-md-5 animated slideInRight">Tham gia ngay</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Carousel End -->
+
+
+<!-- Service Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.1s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-graduation-cap text-primary mb-4"></i>
+                        <h5 class="mb-3">Kỹ năng thực chiến đề thi</h5>
+                        <p>Tăng khả năng phản xạ làm bài và nắm được tâm lý phòng thi</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.3s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-globe text-primary mb-4"></i>
+                        <h5 class="mb-3">Khóa học Online</h5>
+                        <p>Đầy đủ kiến thức và các dạng bài tập của khối 10, khối 11, khối 12</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.5s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-home text-primary mb-4"></i>
+                        <h5 class="mb-3">Trung tâm TTN</h5>
+                        <p>Với đội ngũ giáo viên và trợ giảng nhiệt tình sẽ hỗ trợ học sinh đạt kết quả tốt nhất</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-sm-6 wow fadeInUp" data-wow-delay="0.7s">
+                <div class="service-item text-center pt-3">
+                    <div class="p-4">
+                        <i class="fa fa-3x fa-book-open text-primary mb-4"></i>
+                        <h5 class="mb-3">Bài tập và bộ đề thi</h5>
+                        <p>Do chính tay thầy Nguyện biên soạn sẽ giúp học sinh nắm được các kiến thức quan trọng</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Service End -->
+
+
+<!-- About Start -->
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.1s" style="min-height: 400px;">
+                <div class="position-relative h-100">
+                    <img class="img-fluid position-absolute w-100 h-100" src="{{ url_for('static', filename='img/about.jpg') }}" alt="" style="object-fit: cover;">
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
+                <h6 class="section-title bg-white text-start text-primary pe-3">Thông tin thêm</h6>
+                <h1 class="mb-4">Chào mừng tới Toán Thầy Nguyện</h1>
+                <p class="mb-4">Thầy Nguyện là Thạc Sĩ toán của trường đại học Sư Phạm 1 Hà Nội.</p>
+                <p class="mb-4">Với hơn 10 năm kinh nghiệm giảng dạy và ôn luyện thi THPT, thầy Nguyện sẽ giúp các em có thêm khả năng tư duy về toán và đạt điểm cao bài thi THPT.</p>
+                <div class="row gy-2 gx-4 mb-4">
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Kỹ năng thực chiến đề thi</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Khóa học Online</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Hiểu và phát triển khả năng tư duy</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Đội ngũ hỗ trợ nhiệt tình</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Kiểm tra đánh giá kiến thức</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Bộ đề chuẩn và bám sát theo đề THPT </p>
+                    </div>
+                </div>
+                <a class="btn btn-primary py-3 px-5 mt-2" href="">Xem thêm</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
+
+
+<!-- Categories Start -->
+<div class="container-xxl py-5 category">
+    <div class="container">
+        <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+            <h6 class="section-title bg-white text-center text-primary px-3">Danh mục</h6>
+            <h1 class="mb-5">Danh mục khóa học</h1>
+        </div>
+        <div class="row g-3">
+            <div class="col-lg-7 col-md-6">
+                <div class="row g-3">
+                    <div class="col-lg-12 col-md-12 wow zoomIn" data-wow-delay="0.1s">
+                        <a class="position-relative d-block overflow-hidden" href="">
+                            <img class="img-fluid" src="img/cat-1.jpg" alt="">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">Khối 12</h5>
+                                <small class="text-primary">120 bài học</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.3s">
+                        <a class="position-relative d-block overflow-hidden" href="">
+                            <img class="img-fluid" src="img/cat-2.jpg" alt="">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">Khối 11</h5>
+                                <small class="text-primary">110 bài học</small>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-lg-6 col-md-12 wow zoomIn" data-wow-delay="0.5s">
+                        <a class="position-relative d-block overflow-hidden" href="">
+                            <img class="img-fluid" src="img/cat-3.jpg" alt="">
+                            <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin: 1px;">
+                                <h5 class="m-0">Khối 10</h5>
+                                <small class="text-primary">100 bài học</small>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5 col-md-6 wow zoomIn" data-wow-delay="0.7s" style="min-height: 350px;">
+                <a class="position-relative d-block h-100 overflow-hidden" href="">
+                    <img class="img-fluid position-absolute w-100 h-100" src="img/cat-4.jpg" alt="" style="object-fit: cover;">
+                    <div class="bg-white text-center position-absolute bottom-0 end-0 py-2 px-3" style="margin:  1px;">
+                        <h5 class="m-0">Luyện đề thi</h5>
+                        <small class="text-primary">10 bài học</small>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Categories Start -->
+
+
+
+{% endblock %}

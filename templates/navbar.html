@@ -11,20 +11,43 @@
             <div class="navbar-nav ms-auto p-4 p-lg-0">
                 <a href="{{url_for('home')}}" class="nav-item nav-link">Trang chủ</a>
                 
-                <a href="{{ url_for('home')}}" class="nav-item nav-link">Thông tin</a>
+                <a href="{{ url_for('about')}}" class="nav-item nav-link">Giới thiệu</a>
+                <a href="{{url_for('home')}}" class="nav-item nav-link">Lịch khai giảng</a>
                 <a href="{{url_for('course')}}" class="nav-item nav-link">Khóa học</a>
+                
                 <div class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"> Tài liệu </a>
                     <div class="dropdown-menu fade-down m-0">
-                        <a href="#" class="dropdown-item">Khối 10</a>
-                        <a href="#" class="dropdown-item">Khối 11</a>
-                        <a href="#" class="dropdown-item">Khối 12</a>
+                        <a href="#" class="dropdown-item">Toán 10</a>
+                        <a href="#" class="dropdown-item">Toán 11</a>
+                        <a href="#" class="dropdown-item">Toán 12</a>
                     </div>
                 </div>
                 <a href="{{url_for('contact')}}" class="nav-item nav-link">Liên hệ</a>
             </div>
-            <a href="{{url_for('login')}}" class="btnLogin-popup">Đăng nhập</a>
 
+            {% if current_user.is_authenticated %}
+            <!-- Hiển thị nút "User" nếu đã đăng nhập -->
+            <div style="
+                background-color: #0b101b; /* Màu đen */
+                color: #fff; /* Màu chữ trắng */
+                border-radius: 5px 5px 5px 5px; /*
+                text-decoration: none !important;
+                pointer-events: none !important;
+            " class="nav-item dropdown">
+                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: #fff;"> Tài khoản của bạn </a>
+                <div class="dropdown-menu fade-down m-0">
+                    <a href="#" class="dropdown-item">Cài đặt</a>
+                    <a href="#" class="dropdown-item">Chỉnh sửa thông tin</a>
+                    <a href="#" class="dropdown-item">Khoá học của tôi</a>
+                    <a href="{{url_for('logout')}}" class="dropdown-item">Đăng xuất</a>
+            </div>
+            {% else %}
+            <!-- Hiển thị nút "Đăng nhập" nếu chưa đăng nhập -->
+            <a href="{{ url_for('login') }}" class="btnLogin-popup">Đăng nhập</a>
+            {% endif %}
+
+            </div>
         </div>
     </nav>
     <!-- Navbar End -->

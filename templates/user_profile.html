@@ -1,17 +1,21 @@
-{% extends "base.html" %}
+{%extends 'base.html'%}
+    
 
-{% block content %}
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header">User Profile</div>
-                <div class="card-body">
-                    <p>Welcome, {{ current_user.name }}!</p>
-                    <!-- Display user's information here -->
+    
+    {% block content %}
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">User Profile</div>
+                    <div class="card-body">
+                        <p>Welcome, {{ current_user.name }}!</p>
+                        <!-- Display user's information here -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-{% endblock %}
+    {% endblock %}
+    
+

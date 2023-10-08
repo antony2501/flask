@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-admin = Admin(app, name='Admin Panel', template_mode='bootstrap3')
+admin = Admin(app, name='Trang quản lí ', template_mode='bootstrap3')
 
 # Định nghĩa lớp Python ánh xạ bảng "course"
 class Course(db.Model):
@@ -43,6 +43,8 @@ class CourseRegistration(db.Model):
 
 
 admin.add_view(ModelView(User, db.session)) 
+admin.add_view(ModelView(CourseRegistration, db.session))
+admin.add_view(ModelView(Course,db.session))
 
 
 
@@ -56,9 +58,13 @@ def load_user(user_id):
 def home():
     return render_template('home.html')
 
-@app.route('/bae1')
-def bae1():
-    return render_template('base1.html')
+@app.route('/about')
+def about():
+    return render_template('about.html')
+
+@app.route('/user')
+def user():
+    return render_template('user.html')
 
 @app.route('/contact')
 def contact():
@@ -97,6 +103,9 @@ def register():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        # Nếu người dùng đã đăng nhập, hãy chuyển hướng họ đến trang chính hoặc trang khác.
+        return redirect(url_for('home'))  # Chuyển hướng đến trang chính (thay 'home' bằng route bạn muốn)
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']

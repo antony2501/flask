@@ -27,13 +27,13 @@ class CourseRegistration(db.Model):
     course = db.relationship('Course', backref='registrations')
 
 
-create DATABASE video_course{
+create DATABASE video_course(
     id int not null auto_increment primary key,
     titles varchar(255),
     link varchar(255),
     course_id INT,
     FOREIGN KEY ( course_id ) REFERENCES course(id)
-}
+)
 
 
 

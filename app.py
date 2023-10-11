@@ -21,7 +21,7 @@ class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     title = db.Column(db.String(255), nullable=False)
     img = db.Column(db.String(255), nullable=False)
-    price = db.Column(db.Integer, nullable=False)
+    price = db.Column(db.String(255), nullable=False)
     time_start = db.Column(db.Date, nullable=False)
     student = db.Column(db.Integer, nullable=True)  # Giả sử student có thể là null
 
@@ -43,7 +43,6 @@ class CourseRegistration(db.Model):
 
 
 admin.add_view(ModelView(User, db.session)) 
-admin.add_view(ModelView(CourseRegistration, db.session))
 admin.add_view(ModelView(Course,db.session))
 
 
@@ -138,21 +137,32 @@ def logout():
     return redirect(url_for('login'))
 
 
-from datetime import datetime
 
-@app.route('/join_course/<int:course_id>', methods=['GET', 'POST'])
 
+@app.route('/join_course/<int:course_id>', methods=['GET','POST'])
 @login_required
 def join_course(course_id):
     course = Course.query.get(course_id)
     if course:
         registration = CourseRegistration(user_id=current_user.id, course_id=course_id)
         db.session.add(registration)
+        course.student += 1  # Tăng số lượng sinh viên của khoá học lên 1
         db.session.commit()
         flash('Successfully joined the course.', 'success')
+        return redirect(url_for('registration_success'))
     else:
         flash('Course not found.', 'error')
-    return redirect(url_for('courses'))
+        return redirect(url_for('courses'))
+
+
+@app.route('/course/<int:course_id>')
+def course_detail(course_id):
+    course = Course.query.get(course_id)
+    if course:
+        return render_template('course_detail.html', course=course)
+    else:
+        flash('Course not found.', 'error')
+        return redirect(url_for('courses'))
 
 
 

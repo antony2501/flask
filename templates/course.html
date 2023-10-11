@@ -26,8 +26,23 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
+                
                 <h6 class="section-title bg-white text-center text-primary px-3">Courses</h6>
+
+                <div class="container">
+                    <div class="form-group my-2 mx-auto" style="max-width: 700px;">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <i class="fa fa-search"></i> <!-- Thay thế fa-search bằng icon tìm kiếm của bạn -->
+                                </div>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Tìm kiếm khóa học, bài viết, video, ...">
+                        </div>
+                    </div>
+                </div>
                 <h1 class="mb-5">Popular Courses</h1>
+                
             </div>
             <div class="row g-4 justify-content-center">
                 {% for course in courses %}
@@ -35,9 +50,9 @@
                     <form method="POST" action="{{ url_for('join_course', course_id=course.id) }}">
                         <div class="course-item bg-light">
                             <div class="position-relative overflow-hidden">
-                                <img class="img-fluid" src="{{ course.img }}" alt="">
+                                <img class="img-fluid" src="{{ course.img }}" alt="" style="width: 550px; height: 220px;" >
                                 <div class="w-100 d-flex justify-content-center position-absolute bottom-0 start-0 mb-4">
-                                    <a href="#" class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Xem Khoá học</a>
+                                    <a href="{{url_for('course_detail',course_id=course.id)}}" class="flex-shrink-0 btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Xem Khoá học</a>
                                     
                                     <button class="flex-shrink-0 btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;" type="submit">Đăng kí ngay</button>
     

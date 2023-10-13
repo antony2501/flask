@@ -1,4 +1,4 @@
-from flask import Flask, render_template, redirect, url_for, flash, request, abort
+from flask import Flask, render_template, redirect, url_for, flash, request,abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask_admin import Admin
@@ -30,17 +30,20 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
     role = db.Column(db.String(20))
+    
 
 class Controller(ModelView):
     def is_accessible(self):
         if current_user.role=='admin':
-            return current_user.is_authenticated
+            return current_user.is_authenticated()
         else:
             return abort (404)
-        #return current_user.is_authenticated
+        return current_user.is_authenticated
     def not_authorized(self):
         return "You are not allowed to"
-    
+
+
+
 
 class CourseRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -117,10 +120,7 @@ def login():
         user = User.query.filter_by(email=email).first()
         if user and user.password == password:
             login_user(user)
-            if user.role == 'admin':
-                return redirect('/admin/')
-            else:
-                return redirect(url_for('user_profile'))
+            return redirect(url_for('user_profile'))
         flash('Invalid email or password', 'error')
     return render_template('login.html')
 

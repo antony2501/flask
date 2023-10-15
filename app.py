@@ -66,7 +66,7 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('about.html')
+    return render_template('video.html')
 
 @app.route('/user')
 def user():
@@ -76,6 +76,9 @@ def user():
 def contact():
     return render_template('contact.html')
 
+@app.route('/video')
+def video():
+    return render_template('video.html')
 
 @app.route('/course')
 def course():
@@ -165,7 +168,6 @@ def course_detail(course_id):
     else:
         flash('Course not found.', 'error')
         return redirect(url_for('courses'))
-
 
 
 if __name__ == '__main__':

@@ -12,7 +12,8 @@
             <!-- Phần nội dung khoá học được chia thành 2 cột -->
             <div class="row" style="margin-top: 15px;">
                 <button style="font-size: 23px; color: rgb(249, 249, 249);max-width: 210px; max-height: 40px;font-family: 'Times New Roman', Times, serif;margin-left: 10px;background-color: rgb(23, 16, 16); ">Nội dung khoá học</button> <br>
-                <h2 style="font-size: 15px; color: rgb(9, 1, 0); margin-top: 5px;"> <i class="bi bi-globe-central-south-asia"></i>Bao gồm 30 Bài học - 12 giờ 30 phút </h2>
+                <h2 style="font-size: 15px; color: rgb(9, 1, 0); margin-top: 10px;"> <i class="bi bi-globe-central-south-asia"></i>Bao gồm 30 Bài học - 12 giờ 30 phút </h2>
+                
                 <div class="col-md-10" style="margin-top: 5px; font-size: 17px;color: rgb(17, 15, 15);max-width: 600px;">
                     <ul class="list-unstyled">
                         <li>
@@ -50,7 +51,15 @@
             </div>
             <!-- Danh sách nội dung -->
             <br>
-            <button class="btn btn-primary d-block mx-auto rounded-pill" > Đăng kí ngay </button>
+            {% if is_registered %}
+            
+            <a href="#" 
+            class="btn btn-primary d-block mx-auto rounded-pill" style="max-width: 180px;"> Tiếp tục học </a>
+            {% else %}
+            <a href="{{ url_for('join_course', course_id=course.id) }}" 
+            class="btn btn-primary d-block mx-auto rounded-pill" style="max-width: 180px;"> Đăng kí ngay </a>            
+            {% endif %}           
+
             <br>
             <style>
                 .custom-list-item {

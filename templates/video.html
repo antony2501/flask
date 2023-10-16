@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!-- Trong template video.html -->
+
+<ul>
+    {% for video in videos %}
+        <li>
+            {{ video.title }}
+            <!-- Hiển thị các thông tin khác về video tại đây -->
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

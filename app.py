@@ -6,7 +6,7 @@ from datetime import datetime
 from flask_admin.contrib.sqla import ModelView
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your_secret_key'
+app.config['SECRET_KEY'] = 'abcxzhjghehger'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root:B20DCVT009@localhost/mydb'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -24,6 +24,15 @@ class Course(db.Model):
     time_start = db.Column(db.Date, nullable=False)
     student = db.Column(db.Integer, nullable=True)  # Giả sử student có thể là null
 
+
+class Video(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    # Các trường thông tin khác cho video
+    course = db.relationship('Course', backref='videos')
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120))
@@ -37,7 +46,6 @@ class Controller(ModelView):
             return current_user.is_authenticated
         else:
             return abort (404)
-        #return current_user.is_authenticated
     def not_authorized(self):
         return "You are not allowed to"
     
@@ -80,13 +88,6 @@ def contact():
 def video():
     return render_template('video.html')
 
-@app.route('/course')
-def course():
-    courses = Course.query.all()
-    for course in courses:
-        print(f"Course ID: {course.id}, Title: {course.title}, Image: {course.img}, Price: {course.price}, Start Date: {course.time_start}, Student: {course.student}")
-        
-    return render_template('course.html', courses=courses)
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -144,7 +145,7 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/join_course/<int:course_id>', methods=['GET','POST'])
+@app.route('/join_course/<int:course_id>')
 @login_required
 def join_course(course_id):
     course = Course.query.get(course_id)
@@ -153,21 +154,71 @@ def join_course(course_id):
         db.session.add(registration)
         course.student += 1  # Tăng số lượng sinh viên của khoá học lên 1
         db.session.commit()
+        videos = Video.query.filter_by(course_id=course_id).all()
         flash('Successfully joined the course.', 'success')
-        return redirect(url_for('registration_success'))
+        return render_template('video.html', course=course, videos=videos)
     else:
         flash('Course not found.', 'error')
         return redirect(url_for('courses'))
 
 
+
+@app.route('/course')
+@login_required  # Đảm bảo rằng người dùng đã đăng nhập để kiểm tra đăng ký
+def course():
+    courses = Course.query.all()
+    user = current_user  # Sử dụng current_user từ Flask-Login để lấy thông tin người dùng hiện tại
+    
+    # Tạo một danh sách khoá học mà người dùng đã đăng ký
+    registered_courses = [registration.course for registration in user.registrations]
+    
+    return render_template('course.html', courses=courses, registered_courses=registered_courses)
+
+
+@app.route('/course/<int:course_id>/video')
+def course_video(course_id):
+    course = Course.query.get(course_id)
+    if course:
+        videos = course.videos
+        return render_template('video.html', course=course, videos=videos)
+    else:
+        flash('Không tìm thấy khoá học.', 'error')
+        return redirect(url_for('course'))
+
+
+# Trong route course_detail
 @app.route('/course/<int:course_id>')
 def course_detail(course_id):
     course = Course.query.get(course_id)
     if course:
-        return render_template('course_detail.html', course=course)
+        is_registered = False
+        if current_user.is_authenticated:  # Kiểm tra xem người dùng đã đăng nhập chưa
+            for registration in current_user.registrations:
+                if registration.course_id == course_id:
+                    is_registered = True
+                    break
+        return render_template('course_detail.html', course=course, is_registered=is_registered)
     else:
-        flash('Course not found.', 'error')
+        flash('Không tìm thấy khoá học.', 'error')
         return redirect(url_for('courses'))
+
+
+  
+
+    
+
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST':
+        search_query = request.form.get('search_query')
+        # Thực hiện tìm kiếm các khoá học có liên quan dựa trên `search_query` và title của video
+        search_results = Course.query.join(Video).filter(
+            (Course.title.ilike(f"%{search_query}%")) |
+            (Video.title.ilike(f"%{search_query}%"))
+        ).all()
+        return render_template('course.html', courses=search_results)
+    return redirect(url_for('courses'))
+
 
 
 if __name__ == '__main__':

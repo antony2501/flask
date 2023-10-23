@@ -1,7 +1,7 @@
     
     <!-- Navbar Start -->
     <nav class="navbar navbar-expand-lg bg-white navbar-light shadow sticky-top p-0">
-        <a href="index.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
+        <a href="home.html" class="navbar-brand d-flex align-items-center px-4 px-lg-5">
             <h2 class="m-0 text-primary"><i class="fa fa-book me-3"></i>Toán Thầy Nguyện</h2>
         </a>
         <button type="button" class="navbar-toggler me-4" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -29,22 +29,22 @@
             {% if current_user.is_authenticated %}
             <!-- Hiển thị nút "User" nếu đã đăng nhập -->
             <div style="
-                background-color: #0b101b; /* Màu đen */
-                color: #fff; /* Màu chữ trắng */
-                border-radius: 5px 5px 5px 5px; /*
+                background-color: #0b101b;
+                color: #fff; /* Màu chữ trắng 
+                border-radius: 5px 5px 5px 5px; 
                 text-decoration: none !important;
                 pointer-events: none !important;
             " class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: #fff;"> Tài khoản của bạn </a>
                 <div class="dropdown-menu fade-down m-0">
                     <a href="#" class="dropdown-item">Cài đặt</a>
-                    <a href="#" class="dropdown-item">Chỉnh sửa thông tin</a>
+                    <a href="{{url_for('user_profile')}}" class="dropdown-item">Chỉnh sửa thông tin</a>
                     <a href="#" class="dropdown-item">Khoá học của tôi</a>
                     <a href="{{url_for('logout')}}" class="dropdown-item">Đăng xuất</a>
             </div>
             {% else %}
             <!-- Hiển thị nút "Đăng nhập" nếu chưa đăng nhập -->
-            <a href="{{ url_for('login') }}" class="btnLogin-popup">Đăng nhập</a>
+            <a href="{{ url_for('login') }}" class=" col-2 text-center" style="background-color: #181d38;display: flex;font-size: 20px;justify-content: center;align-items: center;height: 60px;color: #fff;">Đăng nhập</a>
             {% endif %}
 
             </div>

@@ -1,15 +1,160 @@
 {% extends 'base.html' %}
+{% block footer %}{% endblock %}
 
 {% block content %}
-<!-- Trong template video.html -->
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600&display=swap');
+* {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    text-transform: capitalize;
+}
 
-<ul>
-    {% for video in videos %}
-        <li>
-            {{ video.title }}
-            <!-- Hiển thị các thông tin khác về video tại đây -->
-        </li>
-    {% endfor %}
-</ul>
+body {
+    background-color: #fff;
+}
+
+.container {
+    max-width: 1700px;
+    margin: 30px 5px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+
+.container .main-video-container {
+    
+    border-radius: 5px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, .1);
+    background-color: #fff;
+    padding: 10px 15px;
+}
+
+.container .main-video-container .main-video {
+    margin-bottom: 7px;
+    border-radius: 5px;
+    width: 950px;
+    height: 520px;
+}
+
+.container .main-video-container .main-vid-title {
+    font-size: 20px;
+    color: #444;
+}
+
+
+
+@media (max-width:1200px) {
+    .container {
+        margin: 0;
+    }
+}
+
+@media (max-width:450px) {
+    .container .main-video-container .main-vid-title {
+        font-size: 15px;
+        text-align: center;
+    }
+    .container .video-list-container .list {
+        flex-flow: column;
+        gap: 10px;
+    }
+    .container .video-list-container .list .list-video {
+        width: 100%;
+    }
+    .container .video-list-container .list .list-title {
+        font-size: 15px;
+        text-align: center;
+    }
+}
+
+.container .video-list-container .list.active img {
+    width: 50px;
+} */
+
+
+.video-list-container ul {
+    list-style-type: none; /* Loại bỏ dấu chấm trước mỗi mục */
+    padding: 0;
+}
+
+.video-list-container .list-item {
+    width: 350px;
+    padding: 10px; /* Khoảng cách bên trong thanh ngang */
+    margin-bottom: 10px; /* Khoảng cách giữa các thanh ngang */
+    border-radius: 5px; /* Bo góc thanh ngang */
+    background-color: #f4f4f4; /* Màu nền của thanh ngang */
+    border: 1px solid #ddd; /* Đường viền xung quanh thanh ngang */
+    transition: background-color 0.3s; /* Hiệu ứng màu nền thay đổi trong 0.3 giây */
+    overflow: hidden; /* Ẩn nội dung vượt ra khỏi khối */
+    white-space: nowrap; /* Không xuống dòng nếu tiêu đề quá dài */
+    text-overflow: ellipsis; /* Hiển thị dấu ba chấm (...) nếu tiêu đề quá dài */
+}
+
+
+.video-list-container .list-item:hover {
+    background-color: #112437; /* Màu nền khi rê chuột qua */
+}
+
+.video-list-container a {
+    text-decoration: none; /* Loại bỏ đường gạch chân trong liên kết */
+    color: #333; /* Màu văn bản của liên kết */
+}
+
+.video-list-container a:hover {
+    color: #fff; /* Màu văn bản của liên kết khi rê chuột qua */
+}
+
+.video-list-container .title-text {
+    margin: 0;
+    padding: 0;
+}
+.video-list-container {
+    max-height: 530px; /* Đặt giới hạn chiều cao là 300px, thay thế bằng giá trị mà bạn muốn */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc nếu nội dung vượt qua giới hạn */
+    max-width: 450px;
+    
+}
+
+</style>
+<!-- Trong template video.html -->
+<div class="container">
+    <div class="main-video-container">
+        <iframe  src="{{ videos[0].link }}" title="{{ videos[0].title }}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen loop controls class="main-video"></iframe>
+        <h3 class="main-vid-title">{{ videos[0].title }}</h3>
+    </div>
+
+    <div class="video-list-container" style="margin-top: 10px;">
+        <ul>
+            {% for video in videos %}
+                <a href="#" class="list-title" onclick="changeVideo('{{ video.link }}', '{{ video.title }}')">
+                    <div class="list-item">
+                        <span class="title-text">{{ video.title }}</span>
+                    </div>
+                </a>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+
+
+
+<script>
+function changeVideo(src, title) {
+    let mainVideo = document.querySelector('.main-video');
+    let mainVideoTitle = document.querySelector('.main-vid-title');
+    
+    mainVideo.src = src;
+    mainVideoTitle.innerHTML = title;
+}
+</script>
 
 {% endblock %}

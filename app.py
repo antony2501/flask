@@ -13,7 +13,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager(app)
 login_manager.login_view = 'login'
-admin = Admin(app, name='Trang quản lí ', template_mode='bootstrap3')
+admin = Admin(app, name='Quản trị người dùng', template_mode='bootstrap3')
 
 # Định nghĩa lớp Python ánh xạ bảng "course"
 class Course(db.Model):
@@ -22,15 +22,22 @@ class Course(db.Model):
     img = db.Column(db.String(255), nullable=False)
     price = db.Column(db.String(255), nullable=False)
     time_start = db.Column(db.Date, nullable=False)
-    student = db.Column(db.Integer, nullable=True)  # Giả sử student có thể là null
+    description = db.Column(db.Text, nullable=True)
+    student = db.Column(db.Integer, nullable=True)
+    def __str__(self):
+        return self.title   # Giả sử student có thể là null
 
 
 class Video(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(100), nullable=False)
     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+    link = db.Column(db.String(255), nullable=True)
     # Các trường thông tin khác cho video
     course = db.relationship('Course', backref='videos')
+    def __str__(self):
+        return self.title 
+
 
 
 class User(UserMixin, db.Model):
@@ -39,15 +46,8 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(120), unique=True)
     password = db.Column(db.String(120))
     role = db.Column(db.String(20))
-
-class Controller(ModelView):
-    def is_accessible(self):
-        if current_user.role=='admin':
-            return current_user.is_authenticated
-        else:
-            return abort (404)
-    def not_authorized(self):
-        return "You are not allowed to"
+    def __str__(self):
+        return self.name
     
 
 class CourseRegistration(db.Model):
@@ -57,10 +57,46 @@ class CourseRegistration(db.Model):
     registration_date = db.Column(db.DateTime, default=datetime.utcnow)
     user = db.relationship('User', backref='registrations')
     course = db.relationship('Course', backref='registrations')
+    def __str__(self):
+        return self.user.name
+    
+class Controller(ModelView):
+    def is_accessible(self):
+        if current_user.role=='admin':
+            return current_user.is_authenticated
+        else:
+            return abort (404)
+    def not_authorized(self):
+        return "You are not allowed to"
+
+# Cấu hình các model view
 
 
+class CourseView(ModelView):
+    can_view_details = True
+    edit_modal = True
+    can_create = True
+    details_modal= True
+    column_exclude_list= ['img']
+    column_searchable_list= ['price', 'title', 'description']
+
+
+class VideoView(ModelView):
+    edit_modal = True
+    details_modal = True
+
+class registrationView(ModelView):
+    can_create = False
+    can_delete = False
+    can_edit = False
+
+
+
+#tạo các view
 admin.add_view(Controller(User, db.session)) 
-admin.add_view(ModelView(Course,db.session))
+admin.add_view(CourseView(Course,db.session))
+admin.add_view(registrationView(CourseRegistration, db.session))
+admin.add_view(VideoView(Video,db.session))
 
 
 @login_manager.user_loader
@@ -74,7 +110,7 @@ def home():
 
 @app.route('/about')
 def about():
-    return render_template('video.html')
+    return render_template('home.html')
 
 @app.route('/user')
 def user():
@@ -114,7 +150,7 @@ def register():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('user_profile'))
     if request.method == 'POST':
         email = request.form['email']
         password = request.form['password']
@@ -134,6 +170,7 @@ def login():
 @app.route('/user_profile')
 @login_required
 def user_profile():
+    
     # Truy cập trang hồ sơ người dùng ở đây
     return render_template('user_profile.html')
 
@@ -186,6 +223,7 @@ def course_video(course_id):
         return redirect(url_for('course'))
 
 
+
 # Trong route course_detail
 @app.route('/course/<int:course_id>')
 def course_detail(course_id):
@@ -202,10 +240,7 @@ def course_detail(course_id):
         flash('Không tìm thấy khoá học.', 'error')
         return redirect(url_for('courses'))
 
-
   
-
-    
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -218,7 +253,6 @@ def search():
         ).all()
         return render_template('course.html', courses=search_results)
     return redirect(url_for('courses'))
-
 
 
 if __name__ == '__main__':

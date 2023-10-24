@@ -9,33 +9,25 @@
         <div class="col-lg-8" >
             <!-- Tiêu đề -->
             <h1>{{course.title}}</h1>
+            <a style="color: black;font-size: 20px;">{{course.description}}</a>
             <!-- Phần nội dung khoá học được chia thành 2 cột -->
             <div class="row" style="margin-top: 15px;">
                 <button style="font-size: 23px; color: rgb(249, 249, 249);max-width: 210px; max-height: 40px;font-family: 'Times New Roman', Times, serif;margin-left: 10px;background-color: rgb(23, 16, 16); ">Nội dung khoá học</button> <br>
                 <h2 style="font-size: 15px; color: rgb(9, 1, 0); margin-top: 10px;"> <i class="bi bi-globe-central-south-asia"></i>Bao gồm 30 Bài học - 12 giờ 30 phút </h2>
                 
-                <div class="col-md-10" style="margin-top: 5px; font-size: 17px;color: rgb(17, 15, 15);max-width: 600px;">
+                <div class="col-md-10" style="margin-top: 5px; font-size: 17px;color: rgb(17, 15, 15);max-width: 500px;">
                     <ul class="list-unstyled">
+                        {% for video in videos %}
                         <li>
-                            <div class="list-group-item">
-                                <i class="bi bi-play-circle-fill"></i> Cân bằng trong dung dịch nước (Tiết 2) | Hóa học 11 (KNTTVCS)
+                            
+                        
+                            <div class="list-group-item " style="margin-bottom: 10px ;">
+                                
+                                <i class="bi bi-play-circle-fill"></i> {{video.title}}
                             </div>
+                            
                         </li>
-                        <li>
-                            <div class="list-group-item">
-                                <i class="bi bi-play-circle-fill"></i> HÀM SỐ LŨY THỪA - TOÁN 12
-                            </div>
-                        </li>
-                        <li>
-                            <div class="list-group-item">
-                                <i class="bi bi-play-circle-fill"></i> Tính đồng biến của hàm số | Hóa học 11 (KNTTVCS)
-                            </div>
-                        </li>
-                        <li>
-                            <div class="list-group-item">
-                                <i class="bi bi-play-circle-fill"></i> Tính chu kì tần số con lắc (Tiết 2) | Hóa học 11 (KNTTVCS)
-                            </div>
-                        </li>
+                        {% endfor %}
                     </ul>
                     
 

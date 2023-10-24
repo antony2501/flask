@@ -1,7 +1,8 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-from flask_admin import Admin
+
+from flask_admin import Admin, AdminIndexView, expose, BaseView
 from datetime import datetime
 from flask_admin.contrib.sqla import ModelView
 
@@ -79,6 +80,13 @@ class CourseView(ModelView):
     details_modal= True
     column_exclude_list= ['img']
     column_searchable_list= ['price', 'title', 'description']
+    column_labels = {
+        'price':'Học phí',
+        'title':'Tiêu đề',
+        'description':'Mô tả',
+        'time_start':'Khai giảng',
+        'student': 'Sĩ số',
+    }
 
 
 class VideoView(ModelView):
@@ -87,16 +95,17 @@ class VideoView(ModelView):
 
 class registrationView(ModelView):
     can_create = False
-    can_delete = False
     can_edit = False
 
 
 
+
 #tạo các view
-admin.add_view(Controller(User, db.session)) 
-admin.add_view(CourseView(Course,db.session))
-admin.add_view(registrationView(CourseRegistration, db.session))
-admin.add_view(VideoView(Video,db.session))
+admin.add_view(Controller(User, db.session, name='Người dùng')) 
+admin.add_view(CourseView(Course,db.session, name='Khoá học'))
+admin.add_view(registrationView(CourseRegistration, db.session, name='Đăng ký'))
+admin.add_view(VideoView(Video,db.session , name='Danh sách bài học'))
+
 
 
 @login_manager.user_loader
@@ -229,13 +238,15 @@ def course_video(course_id):
 def course_detail(course_id):
     course = Course.query.get(course_id)
     if course:
+        videos = course.videos
+    if course:
         is_registered = False
         if current_user.is_authenticated:  # Kiểm tra xem người dùng đã đăng nhập chưa
             for registration in current_user.registrations:
                 if registration.course_id == course_id:
                     is_registered = True
                     break
-        return render_template('course_detail.html', course=course, is_registered=is_registered)
+        return render_template('course_detail.html', course=course,videos=videos, is_registered=is_registered)
     else:
         flash('Không tìm thấy khoá học.', 'error')
         return redirect(url_for('courses'))

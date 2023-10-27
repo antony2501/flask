@@ -12,7 +12,7 @@
                 <a href="{{url_for('home')}}" class="nav-item nav-link">Trang chủ</a>
                 
                 <a href="{{ url_for('about')}}" class="nav-item nav-link">Giới thiệu</a>
-                <a href="{{url_for('home')}}" class="nav-item nav-link">Lịch khai giảng</a>
+                
                 <a href="{{url_for('course')}}" class="nav-item nav-link">Khóa học</a>
                 
                 <div class="nav-item dropdown">
@@ -37,8 +37,9 @@
             " class="nav-item dropdown">
                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" style="color: #fff;"> Tài khoản của bạn </a>
                 <div class="dropdown-menu fade-down m-0">
-                    <a href="#" class="dropdown-item">Cài đặt</a>
-                    <a href="{{url_for('user_profile')}}" class="dropdown-item">Chỉnh sửa thông tin</a>
+                    <a href="{{url_for('user_profile')}}" class="dropdown-item">Cài đặt</a>
+                    <a href="{{url_for('reset_password')}}" class="dropdown-item">Đổi mật khẩu</a>
+                    
                     <a href="#" class="dropdown-item">Khoá học của tôi</a>
                     <a href="{{url_for('logout')}}" class="dropdown-item">Đăng xuất</a>
             </div>

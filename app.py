@@ -1,7 +1,7 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-
+import matplotlib.pyplot as plt
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from datetime import datetime
 from flask_admin.contrib.sqla import ModelView
@@ -103,7 +103,7 @@ class registrationView(ModelView):
 #tạo các view
 admin.add_view(Controller(User, db.session, name='Người dùng')) 
 admin.add_view(CourseView(Course,db.session, name='Khoá học'))
-admin.add_view(registrationView(CourseRegistration, db.session, name='Đăng ký'))
+admin.add_view(registrationView(CourseRegistration, db.session, name='Danh sách đăng ký'))
 admin.add_view(VideoView(Video,db.session , name='Danh sách bài học'))
 
 
@@ -152,7 +152,7 @@ def register():
         db.session.add(new_user)
         db.session.commit()
         flash('Registration successful. You can now log in.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('register'))
     
     return render_template('register.html')
 
@@ -189,6 +189,27 @@ def user_profile():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+@app.route('/reset_password', methods=['GET', 'POST'])
+@login_required
+def reset_password():
+    if request.method == 'POST':
+        current_password = request.form.get('current_password')
+        new_password = request.form.get('new_password')
+        confirm_password = request.form.get('confirm_password')
+
+        if current_user.password != current_password:
+            flash('Incorrect current password', 'error')
+        elif new_password != confirm_password:
+            flash('Passwords do not match', 'error')
+        else:
+            # Cập nhật mật khẩu người dùng
+            current_user.password = new_password
+            db.session.commit()
+            flash('Password updated successfully', 'success')
+            return redirect(url_for('reset_password'))
+
+    return render_template('reset_password.html')
 
 
 @app.route('/join_course/<int:course_id>')

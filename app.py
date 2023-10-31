@@ -69,6 +69,7 @@ class Controller(ModelView):
             return abort (404)
     def not_authorized(self):
         return "You are not allowed to"
+    
 
 # Cấu hình các model view
 
@@ -76,6 +77,7 @@ class Controller(ModelView):
 class CourseView(ModelView):
     can_view_details = True
     edit_modal = True
+    create_modal = True
     can_create = True
     details_modal= True
     column_exclude_list= ['img']
@@ -92,6 +94,7 @@ class CourseView(ModelView):
 class VideoView(ModelView):
     edit_modal = True
     details_modal = True
+    create_modal = True
 
 class registrationView(ModelView):
     can_create = False
@@ -99,8 +102,8 @@ class registrationView(ModelView):
 
 
 
-
 #tạo các view
+
 admin.add_view(Controller(User, db.session, name='Người dùng')) 
 admin.add_view(CourseView(Course,db.session, name='Khoá học'))
 admin.add_view(registrationView(CourseRegistration, db.session, name='Danh sách đăng ký'))

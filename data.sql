@@ -1,5 +1,6 @@
 CREATE DATABASE mydb;
 
+
 create table user (
     id int not null auto_increment primary key,
     name varchar(255) not null,
@@ -17,6 +18,8 @@ CREATE TABLE course(
     time_start DATA NOT NULL,
     student INT
 )
+
+Làm chủ toán lớp 12 - link - dạy về các dạng toán 12 - 500.000VND - 2023/01/25 - 20 
 
 class CourseRegistration(db.Model):
     id = db.Column(db.Integer, primary_key=True)

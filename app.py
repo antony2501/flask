@@ -1,7 +1,6 @@
 from flask import Flask, render_template, redirect, url_for, flash, request, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
-import matplotlib.pyplot as plt
 from flask_admin import Admin, AdminIndexView, expose, BaseView
 from datetime import datetime
 from flask_admin.contrib.sqla import ModelView
@@ -103,7 +102,6 @@ class registrationView(ModelView):
 
 
 #tạo các view
-
 admin.add_view(Controller(User, db.session, name='Người dùng')) 
 admin.add_view(CourseView(Course,db.session, name='Khoá học'))
 admin.add_view(registrationView(CourseRegistration, db.session, name='Danh sách đăng ký'))
@@ -148,13 +146,13 @@ def register():
         # Kiểm tra xem email đã tồn tại hay chưa
         existing_user = User.query.filter_by(email=email).first()
         if existing_user:
-            flash('Email already exists. Please use a different email.', 'error')
+            flash('Email đã tồn tại . Vui lòng đăng kí bằng email khác.', 'error')
             return render_template('register.html')
         
         new_user = User(name=name, email=email, password=password, role=role)
         db.session.add(new_user)
         db.session.commit()
-        flash('Registration successful. You can now log in.', 'success')
+        flash('Đăng ký tài khoản thành công !', 'success')
         return redirect(url_for('register'))
     
     return render_template('register.html')
@@ -172,8 +170,8 @@ def login():
             if user.role == 'admin':
                 return redirect('/admin/')
             else:
-                return redirect(url_for('user_profile'))
-        flash('Invalid email or password', 'error')
+                return redirect(url_for('home'))
+        flash('Tài khoản hoặc mật khẩu không đúng', 'error')
     return render_template('login.html')
 
 
@@ -202,14 +200,14 @@ def reset_password():
         confirm_password = request.form.get('confirm_password')
 
         if current_user.password != current_password:
-            flash('Incorrect current password', 'error')
+            flash('Mật khẩu hiện tại không đúng', 'error')
         elif new_password != confirm_password:
-            flash('Passwords do not match', 'error')
+            flash('Xác nhận lại mật khẩu cho đúng', 'error')
         else:
             # Cập nhật mật khẩu người dùng
             current_user.password = new_password
             db.session.commit()
-            flash('Password updated successfully', 'success')
+            flash('Cập nhật mật khẩu thành công', 'success')
             return redirect(url_for('reset_password'))
 
     return render_template('reset_password.html')
@@ -225,7 +223,6 @@ def join_course(course_id):
         course.student += 1  # Tăng số lượng sinh viên của khoá học lên 1
         db.session.commit()
         videos = Video.query.filter_by(course_id=course_id).all()
-        flash('Successfully joined the course.', 'success')
         return render_template('video.html', course=course, videos=videos)
     else:
         flash('Course not found.', 'error')
